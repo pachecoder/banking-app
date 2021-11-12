@@ -1,4 +1,5 @@
 ﻿using BankingApp.Domain.Base;
+using System.Text.Json.Serialization;
 
 namespace BankingApp.Domain
 {
@@ -8,6 +9,7 @@ namespace BankingApp.Domain
 
         public virtual decimal Balance { get; set; }
 
+        [JsonIgnore]
         public virtual Customer Customer { get; set; }
 
     }

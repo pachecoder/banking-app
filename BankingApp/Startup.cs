@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BankingApp.Data;
-using BankingApp.Infrastructure.Behaviours;
 using BankingApp.Infrastructure.Mapper;
+using BankingApp.Repository;
+using BankingApp.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -35,8 +36,8 @@ namespace BankingApp
 
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
 
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
+            services.AddTransient<ICustomerServices, CustomerServices>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
