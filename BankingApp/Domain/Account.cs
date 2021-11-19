@@ -15,9 +15,7 @@ namespace BankingApp.Domain
 
         public virtual decimal Balance { get; set; }
 
-        [JsonIgnore]
         public virtual Customer Customer { get; set; }
-
 
         public virtual ICollection<Transaction> Transaction { get; set; }
 

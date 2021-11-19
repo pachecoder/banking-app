@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BankingApp.Dto
 {
@@ -12,5 +13,6 @@ namespace BankingApp.Dto
 
         public DateTime BornDate { get; set; }
 
+        public List<AccountDto> Account { get; set; }
     }
 }

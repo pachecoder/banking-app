@@ -1,4 +1,5 @@
 ﻿using BankingApp.Domain;
+using BankingApp.Dto;
 using BankingApp.Repository;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace BankingApp.Services
             _customerRepository = customerRepository;
         }
 
-        public Task<Customer> GetById(int id)
+        public Task<CustomerDto> GetById(int id)
         {
             return  _customerRepository.GetById(id);
         }
