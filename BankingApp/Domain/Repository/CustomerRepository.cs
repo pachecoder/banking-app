@@ -1,6 +1,8 @@
 ﻿using BankingApp.Data;
 using BankingApp.Domain;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using System;
 using System.Threading.Tasks;
 
 namespace BankingApp.Repository
@@ -16,9 +18,21 @@ namespace BankingApp.Repository
     
         public async Task<Customer> GetById(int id)
         {
-            var customer = _context.Customers.Include(s => s.Account);
 
-            return await customer.FirstOrDefaultAsync(s => s.Id == id);
+            try
+            {
+                if (id == 2)
+                    throw new NotImplementedException();
+
+                var customer = _context.Customers.Include(s => s.Account);
+
+                return await customer.FirstOrDefaultAsync(s => s.Id == id);
+
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
     }
 }

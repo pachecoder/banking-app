@@ -10,7 +10,9 @@ namespace BankingApp.Infrastructure.Mapper
         {
             CreateMap<Customer, CustomerDto>()
                 .ForMember(destination => destination.RegistrationDate, opt =>
-                    opt.MapFrom(destination => destination.Created.ToShortDateString()));
+                    opt.MapFrom(destination =>  destination.Created));
+
+            CreateMap<Transaction, TransactionDto>().ReverseMap();
         }
     }
 }

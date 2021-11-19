@@ -7,6 +7,11 @@ namespace BankingApp.Domain
 {
     public class Customer : EntityBase
     {
+        public Customer()
+        {
+            Transaction = new HashSet<Transaction>();
+        }
+
         [Required]
         public string FullName { get; set; }
 
@@ -18,5 +23,7 @@ namespace BankingApp.Domain
         public string Ssn { get; set; }
 
         public virtual ICollection<Account> Account { get; set; }
+
+        public virtual ICollection<Transaction> Transaction { get; set; }
     }
 }

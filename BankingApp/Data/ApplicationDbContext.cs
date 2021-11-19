@@ -9,6 +9,8 @@ namespace BankingApp.Data
 
         public DbSet<Account> Accounts { get; set; }
 
+        public DbSet<Transaction> Transactions { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -18,18 +20,55 @@ namespace BankingApp.Data
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            modelBuilder.Entity<Customer>()
-                .ToTable("Customers")
-                .HasMany(a => a.Account)
+            modelBuilder.Entity<Customer>(s =>
+            {
+                s.ToTable("Customers");
+
+                s.HasMany(a => a.Account)
                 .WithOne(c => c.Customer)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Customer_Accounts");
 
-            modelBuilder.Entity<Account>()
-                .ToTable("Accounts")
+                s.Property(p => p.Created).HasDefaultValueSql("getdate()");
+            });
+
+
+
+            modelBuilder.Entity<Transaction>(s =>
+            {
+
+                s.ToTable("Transactions");
+
+                s.HasOne(c => c.Account)
+                .WithMany(t => t.Transaction)
+                .IsRequired()
+                .HasForeignKey(s => s.AccountId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Transaction_Accounts");
+
+                s.HasOne(c => c.Customer)
+                .WithMany(t => t.Transaction)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey(s => s.CustomerId)
+                .HasConstraintName("FK_Transaction_Customers");
+
+                s.Property(p => p.Created).HasDefaultValueSql("getdate()");
+
+            });
+
+
+
+            modelBuilder.Entity<Account>(s =>
+            { 
+                s.ToTable("Accounts")
                 .HasOne(c => c.Customer)
                 .WithMany(a => a.Account);
+
+                s.Property(p => p.Created).HasDefaultValueSql("getdate()");
+            });
+                
         }
 
     }

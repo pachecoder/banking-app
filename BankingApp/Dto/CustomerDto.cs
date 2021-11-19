@@ -8,7 +8,7 @@ namespace BankingApp.Dto
 
         public string FullName { get; set; }
 
-        public DateTime RegistrationDate { get; set; }
+        public DateTime? RegistrationDate { get; set; }
 
         public DateTime BornDate { get; set; }
 
